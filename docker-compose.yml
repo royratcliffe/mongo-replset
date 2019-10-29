@@ -1,0 +1,55 @@
+version: "3.7"
+
+services:
+
+  # See https://hub.docker.com/_/mongo for details.
+  # See https://docs.mongodb.com/manual/reference/method/rs.initiate/ for details.
+  mongo-0:
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27017:27017
+    entrypoint:
+      - /usr/bin/mongod
+      - --bind_ip_all
+      - --replSet
+      - rs0
+
+  mongo-1:
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27018:27017
+    entrypoint:
+      - /usr/bin/mongod
+      - --bind_ip_all
+      - --replSet
+      - rs0
+
+  mongo-2:
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27019:27017
+    entrypoint:
+      - /usr/bin/mongod
+      - --bind_ip_all
+      - --replSet
+      - rs0
+
+  mongo-initiate:
+    build:
+      context: mongo-initiate
+    depends_on:
+      - mongo-0
+      - mongo-1
+      - mongo-2
+
+  # See https://hub.docker.com/_/mongo-express for details.
+  mongo-express:
+    image: mongo-express
+    restart: always
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo-0
+    ports:
+      - 8081:8081
