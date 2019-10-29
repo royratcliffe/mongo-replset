@@ -40,6 +40,7 @@ services:
   mongo-initiate:
     build:
       context: mongo-initiate
+    restart: on-failure
     depends_on:
       - mongo-0
       - mongo-1
