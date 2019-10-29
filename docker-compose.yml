@@ -50,6 +50,8 @@ services:
   mongo-express:
     image: mongo-express
     restart: always
+    depends_on:
+      - mongo-initiate
     environment:
       - ME_CONFIG_MONGODB_SERVER=mongo-0
     ports:
