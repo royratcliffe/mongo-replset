@@ -1,6 +1,6 @@
 rs.initiate(
   {
-    _id: "rs0",
+    _id: repl_set,
     version: 1,
     members: [
       { _id: 0, host: "mongo-0:27017" },

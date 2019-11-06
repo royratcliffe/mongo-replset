@@ -13,7 +13,7 @@ services:
       - /usr/bin/mongod
       - --bind_ip_all
       - --replSet
-      - rs0
+      - $REPL_SET
 
   mongo-1:
     image: mongo:latest
@@ -24,7 +24,7 @@ services:
       - /usr/bin/mongod
       - --bind_ip_all
       - --replSet
-      - rs0
+      - $REPL_SET
 
   mongo-2:
     image: mongo:latest
@@ -35,12 +35,14 @@ services:
       - /usr/bin/mongod
       - --bind_ip_all
       - --replSet
-      - rs0
+      - $REPL_SET
 
   mongo-initiate:
     build:
       context: mongo-initiate
     restart: on-failure
+    environment:
+      - REPL_SET=$REPL_SET
     depends_on:
       - mongo-0
       - mongo-1
